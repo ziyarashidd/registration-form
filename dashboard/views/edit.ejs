@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Username</title>
+    <style>
+       /* Styling is kept the same */
+       body, input, select, label, button {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f4f4f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: inline-block;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        input[type="file"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+            border: none;
+            margin-top: 0;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit User: <%= employee.username %></h2>
+    <form method="POST" action="/user/<%= employee.id %>?_method=PATCH">
+        <!-- Name -->
+        <label for="name">Name: <input type="text" name="name" value="<%= employee.name %>" placeholder="Enter your name" required></label><br>
+
+        <!-- Email -->
+        <label for="email">Email: <input type="email" name="email" value="<%= employee.email %>" placeholder="Enter your email" required></label><br>
+
+        <!-- Mobile Number -->
+        <label for="phone">Mobile No: <input type="number" name="phone" value="<%= employee.phone %>" placeholder="Enter your Mobile No" required></label><br>
+
+        <!-- Designation -->
+        <label for="designation">Designation:
+            <select name="designation" required>
+                <option value="HR" <%= employee.designation === 'HR' ? 'selected' : '' %>>HR</option>
+                <option value="Manager" <%= employee.designation === 'Manager' ? 'selected' : '' %>>Manager</option>
+                <option value="Sales" <%= employee.designation === 'Sales' ? 'selected' : '' %>>Sales</option>
+            </select>
+        </label><br>
+
+        <!-- Gender -->
+        <label>Gender:</label>
+        <label for="male">Male
+            <input type="radio" id="male" name="gender" value="male" <%= employee.gender === 'male' ? 'checked' : '' %>> 
+        </label>
+        <label for="female">Female
+            <input type="radio" id="female" name="gender" value="female" <%= employee.gender === 'female' ? 'checked' : '' %>> 
+        </label>
+        <label for="other">Other
+            <input type="radio" id="other" name="gender" value="other" <%= employee.gender === 'other' ? 'checked' : '' %>> 
+        </label><br>
+
+        <!-- course -->
+        <label for="mca">MCA: <input type="checkbox" name="course[]" value="MCA" <%= employee.course.includes('MCA') ? 'checked' : '' %>></label><br>
+        <label for="bca">BCA: <input type="checkbox" name="course[]" value="BCA" <%= employee.course.includes('BCA') ? 'checked' : '' %>></label><br>
+        <label for="bsc">BSC: <input type="checkbox" name="course[]" value="BSC" <%= employee.course.includes('BSC') ? 'checked' : '' %>></label><br>
+
+        <!-- Image Upload -->
+        <label for="img-upload">Image Upload:</label>
+        <input type="file" id="img-upload" name="image" accept="image/*"><br>
+
+        <img id="preview" src="" alt="Image Preview" style="display:none; width: 200px; margin-top: 10px;">
+        
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script>
+        // Image preview functionality (optional)
+        const fileInput = document.getElementById('img-upload');
+        const previewImage = document.getElementById('preview');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.style.display = 'block';
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+            }
+        });
+    </script>
+    <a href="http://localhost:8080/">Back to Home Page</a>
+</body>
+</html>

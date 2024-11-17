@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL Users</title>
+    <style>
+        table,tr,th,td{
+            border: 2px solid black;
+            width: 100%;
+            table-layout: fixed; 
+            /* border-collapse: collapse;/ */
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Unique Id</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile No</th>
+            <th>Designation</th>
+            <th>Gender</th>
+            <th>Course</th>
+            <th>Create date</th>
+            <th >Action</th>
+        </tr>
+        <% for(employee of employees) { %>
+            <tr>
+                <td><%= employee.id %></td>
+                <td><%= employee.image %></td>
+                <td><%= employee.name %></td>
+                <td><%= employee.email %></td>
+                <td><%= employee.phone %></td>
+                <td><%= employee.designation %></td>
+                <td><%= employee.gender %></td>
+                <td><%= employee.course %></td>
+                <td><%= employee.date %></td>
+                <td >
+                <form method="get" action="/user/<%=employee.id  %>/edit">
+                    <button>Edit</button>                  
+                </form>
+                <form action="/user/<%= employee.id %>?_method=DELETE" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+                </td>
+            </tr>
+        <% } %> 
+    </table>
+    <a href="http://localhost:8080/">Back to Home Page</a>
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+<!-- views/delete.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Employee</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this employee?</h1>
+    <p>Name: <%= employee.name %></p>
+    <p>Email: <%= employee.email %></p>
+    <p>Phone: <%= employee.phone %></p>
+    <p>Designation: <%= employee.designation %></p>
+    
+    <!-- Form to confirm deletion -->
+    <form action="/user/<%= employee.id %>?_method=DELETE" method="POST">
+        <button type="submit"> Delete</button>
+    </form>
+    
+    <!-- Cancel link -->
+    <a href="/user">Cancel</a>
+</body>
+</html>
